@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Gaji Karyawan</title>
+    <style>
+        /* CSS PINDAH KE SINI */
+        body {
+            font-family: "Times New Roman", serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 700px;
+            margin: 40px auto;
+            display: flex;
+            border: 1px solid #000;
+        }
+
+        .box {
+            width: 50%;
+            padding: 20px;
+            border-right: 1px solid #000;
+        }
+
+        .box:last-child {
+            border-right: none;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 90%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        p {
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="box">
+        <h2>Hitung Gaji Karyawan</h2>
+
+        <label>Gaji Pokok (Rp):</label>
+        <input type="number" id="gajiPokok" value="5000000">
+
+        <label>Jumlah Jam Lembur:</label>
+        <input type="number" id="jamLembur" value="20">
+
+        <button onclick="hitungGaji()">Hitung Gaji</button>
+    </div>
+
+    <div class="box">
+        <p><b>Gaji Pokok:</b> <span id="outGajiPokok">Rp 5.000.000</span></p>
+        <p><b>Total Gaji Lembur:</b> <span id="outLembur">Rp 400.000</span></p>
+        <p><b>Gaji Kotor:</b> <span id="outKotor">Rp 5.400.000</span></p>
+        <p><b>Pajak:</b> <span id="outPajak">Rp 540.000</span></p>
+        <p><b>Gaji Bersih:</b> <span id="outBersih">Rp 4.860.000</span></p>
+    </div>
+
+</div>
+
+<script>
+    // JAVASCRIPT LOGIC
+    function formatRupiah(angka) {
+        return "Rp " + angka.toLocaleString("id-ID");
+    }
+
+    function hitungGaji() {
+        let gajiPokok = parseInt(document.getElementById("gajiPokok").value) || 0;
+        let jamLembur = parseInt(document.getElementById("jamLembur").value) || 0;
+
+        let gajiLembur = jamLembur * 20000;
+        let gajiKotor = gajiPokok + gajiLembur;
+
+        let pajak = 0;
+        if (gajiKotor < 5000000) {
+            pajak = gajiKotor * 0.05;
+        } else if (gajiKotor <= 10000000) {
+            pajak = gajiKotor * 0.10;
+        } else {
+            pajak = gajiKotor * 0.15;
+        }
+
+        let gajiBersih = gajiKotor - pajak;
+
+        document.getElementById("outGajiPokok").innerHTML = formatRupiah(gajiPokok);
+        document.getElementById("outLembur").innerHTML = formatRupiah(gajiLembur);
+        document.getElementById("outKotor").innerHTML = formatRupiah(gajiKotor);
+        document.getElementById("outPajak").innerHTML = formatRupiah(pajak);
+        document.getElementById("outBersih").innerHTML = formatRupiah(gajiBersih);
+    }
+</script>
+
+</body>
+</html>
